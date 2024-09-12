@@ -36,9 +36,12 @@ RUN set -x \
     && echo "builder ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers \
     && chown -R builder:builder /project/
 
+# Register volumes
+VOLUME /project
+VOLUME /home/builder/.buildozer
+
 # Change user and CWD
 USER builder
-VOLUME /project
 WORKDIR /project
 
 
