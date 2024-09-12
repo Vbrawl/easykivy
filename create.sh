@@ -134,7 +134,7 @@ easykivy_build() {
 }
 
 easykivy_update_container_scripts() {
-    \$EASYKIVY_DIRECTORY/update_container_scripts.sh
+    \$EASYKIVY_DIRECTORY/bin/update_container_scripts.sh
 }
 
 easykivy_deactivate() {
