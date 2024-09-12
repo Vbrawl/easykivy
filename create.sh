@@ -2,6 +2,7 @@
 CONTAINER_NAME=""
 SOURCE_DIRECTORY=""
 IMAGE_NAME="easykivy"
+CACHE_DIRECTORY="$(pwd)/.cache"
 
 
 # Parse parameters
@@ -54,6 +55,15 @@ else
 
 fi
 
+# Ensure cache directory exists
+if [ ! -d "$CACHE_DIRECTORY" ]
+then
+
+    mkdir "$CACHE_DIRECTORY"
+    mkdir "$CACHE_DIRECTORY/home.buildozer"
+    chmod 777 -R "$CACHE_DIRECTORY"
+
+fi
 
 # Ensure image exists in the docker
 IMAGE_EXISTS=0
@@ -92,7 +102,11 @@ if [ $CONTAINER_EXISTS -eq 0 ]
 then
 
     echo "Container doesn't exist. Building container..."
-    docker create -it --name $CONTAINER_NAME $IMAGE_NAME
+    docker create \
+        --name $CONTAINER_NAME \
+        --volume "$CACHE_DIRECTORY/home.buildozer:/home/builder/.buildozer" \
+        -it \
+        $IMAGE_NAME
     echo "Container successfully built."
 
 else
