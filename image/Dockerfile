@@ -40,6 +40,7 @@ RUN set -x \
 VOLUME /project
 VOLUME /home/builder/.buildozer
 VOLUME /home/builder/.cache/pip
+VOLUME /home/builder/.gradle
 
 # Change user and CWD
 USER builder

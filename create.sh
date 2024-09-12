@@ -59,6 +59,7 @@ fi
 mkdir "$CACHE_DIRECTORY"
 mkdir "$CACHE_DIRECTORY/home.buildozer"
 mkdir "$CACHE_DIRECTORY/home.pip"
+mkdir "$CACHE_DIRECTORY/home.gradle"
 
 chmod 777 -R "$CACHE_DIRECTORY"
 
@@ -103,6 +104,7 @@ then
         --name $CONTAINER_NAME \
         --volume "$CACHE_DIRECTORY/home.buildozer:/home/builder/.buildozer" \
         --volume "$CACHE_DIRECTORY/home.pip:/home/builder/.cache/pip" \
+        --volume "$CACHE_DIRECTORY/home.gradle:/home/builder/.gradle" \
         -it \
         $IMAGE_NAME
     echo "Container successfully built."
