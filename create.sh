@@ -102,7 +102,6 @@ else
 fi
 
 # Create environment script
-BIN_PATH=$(pwd)/bin
 echo "Writing environment script"
 cat > $SOURCE_DIRECTORY/${CONTAINER_NAME}.env <<EOF
 #!/usr/bin/bash
@@ -110,18 +109,18 @@ cat > $SOURCE_DIRECTORY/${CONTAINER_NAME}.env <<EOF
 export IMAGE_NAME="${IMAGE_NAME}"
 export CONTAINER_NAME="${CONTAINER_NAME}"
 export SOURCE_DIRECTORY="${SOURCE_DIRECTORY}"
-export EASYKIVY_DIRECTORY=$(pwd)
+export EASYKIVY_DIRECTORY="$(pwd)"
 
 easykivy_sync() {
-    $BIN_PATH/sync.sh
+    \$EASYKIVY_DIRECTORY/bin/sync.sh
 }
 
 easykivy_build() {
-    $BIN_PATH/build.sh
+    \$EASYKIVY_DIRECTORY/bin/build.sh
 }
 
 easykivy_update_container_scripts() {
-    $BIN_PATH/update_container_scripts.sh
+    \$EASYKIVY_DIRECTORY/update_container_scripts.sh
 }
 
 easykivy_deactivate() {
