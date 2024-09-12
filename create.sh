@@ -56,14 +56,11 @@ else
 fi
 
 # Ensure cache directory exists
-if [ ! -d "$CACHE_DIRECTORY" ]
-then
+mkdir "$CACHE_DIRECTORY"
+mkdir "$CACHE_DIRECTORY/home.buildozer"
+mkdir "$CACHE_DIRECTORY/home.pip"
 
-    mkdir "$CACHE_DIRECTORY"
-    mkdir "$CACHE_DIRECTORY/home.buildozer"
-    chmod 777 -R "$CACHE_DIRECTORY"
-
-fi
+chmod 777 -R "$CACHE_DIRECTORY"
 
 # Ensure image exists in the docker
 IMAGE_EXISTS=0
@@ -105,6 +102,7 @@ then
     docker create \
         --name $CONTAINER_NAME \
         --volume "$CACHE_DIRECTORY/home.buildozer:/home/builder/.buildozer" \
+        --volume "$CACHE_DIRECTORY/home.pip:/home/builder/.cache/pip" \
         -it \
         $IMAGE_NAME
     echo "Container successfully built."

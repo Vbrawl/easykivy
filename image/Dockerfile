@@ -39,6 +39,7 @@ RUN set -x \
 # Register volumes
 VOLUME /project
 VOLUME /home/builder/.buildozer
+VOLUME /home/builder/.cache/pip
 
 # Change user and CWD
 USER builder
