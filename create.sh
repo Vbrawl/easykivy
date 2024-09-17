@@ -78,6 +78,13 @@ then
     echo "Image doesn't exist. Building image..."
     cd image
     docker build -t $IMAGE_NAME .
+
+    if [ $? -ne 0 ]
+    then
+        echo "ERROR: Image build failed!"
+        exit
+    fi
+
     cd ..
     echo "Image successfully built."
 
@@ -107,6 +114,13 @@ then
         --volume "$CACHE_DIRECTORY/home.gradle:/home/builder/.gradle" \
         -it \
         $IMAGE_NAME
+
+    if [ $? -ne 0 ]
+    then
+        echo "ERROR: Container build failed!"
+        exit
+    fi
+
     echo "Container successfully built."
 
 else
