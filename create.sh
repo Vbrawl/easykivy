@@ -112,6 +112,7 @@ then
         --volume "$CACHE_DIRECTORY/home.buildozer:/home/builder/.buildozer" \
         --volume "$CACHE_DIRECTORY/home.pip:/home/builder/.cache/pip" \
         --volume "$CACHE_DIRECTORY/home.gradle:/home/builder/.gradle" \
+	--volume "$SOURCE_DIRECTORY:/project" \
         -it \
         $IMAGE_NAME
 
@@ -139,10 +140,6 @@ export CONTAINER_NAME="${CONTAINER_NAME}"
 export SOURCE_DIRECTORY="${SOURCE_DIRECTORY}"
 export EASYKIVY_DIRECTORY="$(pwd)"
 
-easykivy_sync() {
-    \$EASYKIVY_DIRECTORY/bin/sync.sh
-}
-
 easykivy_build() {
     \$EASYKIVY_DIRECTORY/bin/build.sh
 }
@@ -157,7 +154,6 @@ easykivy_deactivate() {
     unset SOURCE_DIRECTORY
     unset EASYKIVY_DIRECTORY
 
-    unset easykivy_sync
     unset easykivy_build
     unset easykivy_update_container_scripts
     unset easykivy_deactivate

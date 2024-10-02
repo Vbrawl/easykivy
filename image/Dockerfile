@@ -28,30 +28,34 @@ RUN set -x \
         git openjdk-17-jdk \
     && apt-get autoremove
 
-ADD build.sh /project/build.sh
+ADD build.sh /usr/local/bin/build.sh
 
 # Setup builder user
 RUN set -x \
     && useradd -s /usr/bin/bash -U -m builder \
     && echo "builder ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers \
+    && mkdir /project \
+    && mkdir /project/.buildozer \
     && chown -R builder:builder /project/
 
 # Register volumes
 VOLUME /project
+VOLUME /project/.buildozer
 VOLUME /home/builder/.buildozer
 VOLUME /home/builder/.cache/pip
 VOLUME /home/builder/.gradle
 
-# Change user and CWD
+# Change user
 USER builder
-WORKDIR /project
-
 
 # Install buildozer and some of it's dependencies
 RUN set -x \
-    && python3 -m venv .venv \
-    && source .venv/bin/activate \
+    && python3 -m venv ~/.project_venv \
+    && source ~/.project_venv/bin/activate \
     && python3 -m pip install --upgrade pip \
     && python3 -m pip install cython buildozer python-for-android pyOpenssl
 
-ENTRYPOINT ["/project/build.sh"]
+
+# Set entrypoint and CWD
+WORKDIR /project
+ENTRYPOINT ["/usr/local/bin/build.sh"]
