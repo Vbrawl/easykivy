@@ -8,7 +8,7 @@ sudo chown builder:builder -R /project
 # Activate python virtual environment
 cd /project
 rm -r bin/*
-source ./.venv/bin/activate
+source ~/.project_venv/bin/activate
 
 # Install requirements and run buildozer
 python3 -m pip install -r requirements.txt
@@ -28,11 +28,5 @@ then
     cd /project
 fi
 
-# Rename apk
-mv bin/$(ls bin/ | head -n 1) bin/app.apk
-
 # Deactivate python virtual environment
 deactivate
-
-# Write a message with what should be the next move
-echo Run "docker cp $(hostname):/project/bin/app.apk ./bin/app.apk"
